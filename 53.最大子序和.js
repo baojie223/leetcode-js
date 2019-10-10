@@ -8,6 +8,6 @@
  * @return {number}
  */
 var maxSubArray = function(nums) {
-    
+    console.log()
 };
 
