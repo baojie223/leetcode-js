@@ -9,44 +9,39 @@
  * @param {string} s
  * @return {string}
  */
-var longestPalindrome = function(s) {
-  function isOdd(number) {
-    if (number % 2 === 0) {
-      return false
-    } else {
-      return true
-    }
-  }
-  if (s.length < 2) return s
-  if (s.length === 2) {
-    if (s[0] === s[1]) {
-      return s
-    } else {
-      return s[0]
-    }
-  }
-  let dp = []
-  dp[0] = s[0]
-  dp[1] = s[0] === s[1] ? s[0] + s[1] : s[1]
-  for (let i = 2; i < s.length; i++) {
-    const odd = isOdd(dp[i - 1].length)
-    if (odd) {
-      const prev = s.indexOf(dp[i - 1]) - 1
-      if (s[prev] === s[i]) {
-        dp[i] = s[i] + dp[i - 1] + s[i]
-      } else {
-        dp[i] = s[i]
+  var longestPalindrome = function(s) {
+    function judge(i, j) {
+      if (j < i + 3) {
+        return s[i] === s[j] ? true : false
       }
-    } else {
-      dp[i] = s[i] === s[i - 1] ? s[i] + s[i - 1] : s[i]
+      if (judge(i + 1, j - 1) && s[i] === s[j]) {
+        return true
+      } else {
+        return false
+      }
     }
-  }
-  let max = dp[0]
-  for (let j = 0; j < dp.length; j++) {
-    if (dp[j].length > max.length) {
-      max = dp[j]
+    if (s.length < 2) return s
+    const dp = []
+    let left = 0
+    let right = 0
+    for (let i = 0; i < s.length; i++) {
+      dp[i] = []
+      for (let j = i + 1; j < s.length; j++) {
+        dp[i][j] = judge(i, j)
+        if (dp[i][j]) {
+          if (j - i > right - left) {
+            right = j
+            left = i
+            // console.log(right, left)
+          }
+        }
+      }
     }
+    // return dp
+    // console.log(dp)
+    // console.log(left, right)
+    return left === 0 && right === 0 ? s[0] : s.slice(left, right) + s[right]
   }
-  return max
-}
 // @lc code=end
+
+// console.log(longestPalindrome('aaaaaaaaaaaaaaaaaa'))
