@@ -11,7 +11,6 @@
  */
 var lengthOfLastWord = function(s) {
   const arr = s.match(/\s\w+/g)
-  const last = arr[arr.length - 1].trim()
-  return !s.length ? 0 : !last ? s.length : last.length
+  return !arr ? s.trim().length : arr[arr.length - 1].trim().length
 }
 // @lc code=end
