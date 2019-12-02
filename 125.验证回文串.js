@@ -10,7 +10,7 @@
  * @return {boolean}
  */
 var isPalindrome = function(s) {
-  const strArr = s.toLowerCase().match(/[a-z0-9]{1}/gi)
+  // const strArr = s.toLowerCase().match(/[a-z0-9]{1}/gi)
   // 最后一个测试用例爆栈了
   // function judge(arr, flag = true) {
   //   if (!flag) return false
@@ -29,15 +29,31 @@ var isPalindrome = function(s) {
   //   }
   // }
   // return judge(strArr)
-  if (!strArr && typeof strArr === 'object') {
-    return true
-  }
-  while (strArr.length > 1) {
-    const left = strArr.shift()
-    const right = strArr.pop()
-    if (left !== right) {
+
+  // solution no.1
+  // if (!strArr && typeof strArr === 'object') {
+  //   return true
+  // }
+  // while (strArr.length > 1) {
+  //   const left = strArr.shift()
+  //   const right = strArr.pop()
+  //   if (left !== right) {
+  //     return false
+  //   }
+  // }
+  // return true
+
+  // solution no.2 双指针
+  const str = s.toLowerCase().match(/[a-z0-9]/ig)
+  if (!str && typeof str === 'object') return true
+  let i = 0
+  let j = str.length - 1
+  while (i < j) {
+    if (str[i] !== str[j]) {
       return false
     }
+    i++
+    j--
   }
   return true
 }
