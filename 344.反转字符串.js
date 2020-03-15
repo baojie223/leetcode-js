@@ -10,14 +10,28 @@
  * @return {void} Do not return anything, modify s in-place instead.
  */
 var reverseString = function(s) {
-  // 太low了
+  // solution no.1 太low了 
   // s.reverse()
   // return s
+
+  // solution no.2
+  // let temp
+  // for (let i = 0; i < Math.floor(s.length / 2); i++) {
+  //   temp = s[i]
+  //   s[i] = s[s.length - 1 - i]
+  //   s[s.length - 1 - i] = temp
+  // }
+
+  // solution no.3 双指针
+  let i = 0
+  let j = s.length - 1
   let temp
-  for (let i = 0; i < Math.floor(s.length / 2); i++) {
+  while (i < j) {
     temp = s[i]
-    s[i] = s[s.length - 1 - i]
-    s[s.length - 1 - i] = temp
+    s[i] = s[j]
+    s[j] = temp
+    i++
+    j--
   }
 }
 // @lc code=end
