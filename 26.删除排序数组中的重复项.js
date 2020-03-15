@@ -8,24 +8,16 @@
  * @return {number}
  */
 var removeDuplicates = function(nums) {
-  const len = nums.length
-  let flag = false
-  for (let i = 0; i < len; i++) {
-    for (let j = len; j < nums.length; j++) {
-      if (nums[i] === nums[j]) {
-        nums[i] = 0
-        flag = true
-        break
-      }
+  // 1. 遍历把元素塞入set
+  // 2. 双指针
+  let i = 0, j = 1
+  while (j < nums.length) {
+    if (nums[i] !== nums[j]) {
+      i++
+      nums[i] = nums[j]
     }
-    if (!flag) {
-      nums.push(nums[i])
-      nums[i] = 0
-    } else {
-      flag = false
-    }
+    j++
   }
-  nums.splice(0, len)
-  return nums.length
+  return i + 1
 };
 

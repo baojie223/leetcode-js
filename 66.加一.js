@@ -10,21 +10,17 @@
  * @return {number[]}
  */
 var plusOne = function(digits) {
-  let temp = Object.assign([], digits)
-  const len = temp.length
-  temp[len - 1] += 1
-  for (let i = len - 1; i > 0; i--) {
-    if (temp[i] === 10) {
-      temp[i] = 0
-      temp[i - 1] += 1
+  // 1. 后序遍历数组进行+1操作，为10进位则继续循环，不为10就返回
+  let i = digits.length - 1
+  for (; i >= 0 ; i--) {
+    const res = digits[i] + 1
+    if (res === 10) {
+      digits[i] = 0
     } else {
-      return temp
+      digits[i] = res
+      break
     }
   }
-  if (temp[0] === 10) {
-    temp[0] = 0
-    temp.unshift(1)
-  }
-  return temp
+  return i === -1 ? [1, ...digits] : digits
 }
 // @lc code=end

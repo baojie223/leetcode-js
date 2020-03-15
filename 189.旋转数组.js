@@ -12,31 +12,27 @@
  */
 var rotate = function(nums, k) {
 
-  // 方法一
+  // 方法一, js暴力破解
   // let i = k
   // while (i > 0) {
   //   nums.unshift(nums.pop())
   //   i--
   // }
 
-  // 方法二
-  let t
-  if (k > nums.length) {
-    t = k % nums.length
-  } else {
-    t = k
-  }
+  // 方法二, 翻转三次
+  k = k % nums.length
   const reverse = (arr, left, right) => {
-    const len = right - left
-    for (let i = 0; i < len / 2; i++) {
-      const tmp = arr[i + left]
-      arr[i + left] = arr[len + left - 1 - i]
-      arr[len + left - 1 - i] = tmp
+    while (left < right) {
+      const temp = arr[left]
+      arr[left] = arr[right]
+      arr[right] = temp
+      left++
+      right--
     }
   }
-  nums.reverse()
-  reverse(nums, 0, t)
-  reverse(nums, t, nums.length)
+  reverse(nums, 0, nums.length - 1)
+  reverse(nums, 0, k - 1)
+  reverse(nums, k, nums.length - 1)
 };
 // @lc code=end
 
