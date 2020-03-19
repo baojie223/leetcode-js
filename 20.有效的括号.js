@@ -8,25 +8,43 @@
  * @return {boolean}
  */
 var isValid = function(s) {
-  let stack = []
-  const leftBrakets = '([{'
-  const menu = {
-    ')': '(',
-    ']': '[',
-    '}': '{'
-  }
-  const list = s.split('').map(str => {
-    if (leftBrakets.includes(str)) {
-      stack.unshift(str)
-      return true
-    } else if (menu[str] === stack[0]) {
-      stack.shift()
-      return true
+  // 1. 栈匹配
+  const stack = []
+  for (let i = 0; i < s.length; i++) {
+    if (s[i] === '(') {
+      stack.push(')')
+    } else if (s[i] === '[') {
+      stack.push(']')
+    } else if (s[i] === '{') {
+      stack.push('}')
     } else {
-      return false
+      if (stack.pop() !== s[i]) {
+        return false
+      }
     }
-  })
-  return (list.filter(bool => !bool).length || stack.length) ? false : true
+  }
+  return stack.length ? false : true
+
+  // 以前的解法
+  // let stack = []
+  // const leftBrakets = '([{'
+  // const menu = {
+  //   ')': '(',
+  //   ']': '[',
+  //   '}': '{'
+  // }
+  // const list = s.split('').map(str => {
+  //   if (leftBrakets.includes(str)) {
+  //     stack.unshift(str)
+  //     return true
+  //   } else if (menu[str] === stack[0]) {
+  //     stack.shift()
+  //     return true
+  //   } else {
+  //     return false
+  //   }
+  // })
+  // return (list.filter(bool => !bool).length || stack.length) ? false : true
 
   // let small = 0
   // let middle = 0
