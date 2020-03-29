@@ -10,6 +10,7 @@
  * @return {number}
  */
 // var climbStairs = function(n) {
+    // 1. 递归 
 //   if (n === 1) {
 //     return 1
 //   }
