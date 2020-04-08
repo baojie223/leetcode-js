@@ -10,13 +10,12 @@
  * @return {number}
  */
 var maxProfit = function(prices) {
-  let totalProfits = 0
+  let total = 0
   for (let i = 1; i < prices.length; i++) {
-    let tmp = prices[i] - prices[i - 1]
-    if (tmp > 0) {
-      totalProfits += tmp
+    if (prices[i] > prices[i - 1]) {
+      total += prices[i] - prices[i - 1]
     }
   }
-  return totalProfits
+  return total
 }
 // @lc code=end
