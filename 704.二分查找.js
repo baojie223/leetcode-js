@@ -10,22 +10,21 @@
  * @param {number} target
  * @return {number}
  */
-var search = function(nums, target) {
-  let left = 0
-  let right = nums.length - 1
-  let mid
+var search = function (nums, target) {
+  let left = 0,
+    right = nums.length - 1
   while (left <= right) {
-    mid = Math.floor((left + right) / 2)
-    if (nums[mid] === target) {
-      return mid
-    }
+    const mid = Math.floor(left + (right - left) / 2)
     if (nums[mid] < target) {
       left = mid + 1
-    }
-    if (nums[mid] > target) {
+    } else if (nums[mid] > target) {
       right = mid - 1
+    } else if (nums[mid] === target) {
+      return mid
     }
   }
   return -1
 }
 // @lc code=end
+
+search([-1, 0, 3, 5, 9, 12], 9)

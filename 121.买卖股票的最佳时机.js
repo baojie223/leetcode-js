@@ -9,25 +9,21 @@
  * @param {number[]} prices
  * @return {number}
  */
-var maxProfit = function(prices) {
-  const len = prices.length
-  const gaps = new Array(len)
-  const findBig = arr => {
-    let big = arr[0]
-    for (let i = 1; i < arr.length; i++) {
-      if (arr[i] > big) {
-        big = arr[i]
-      }
+var maxProfit = function (prices) {
+  const dp = Array(prices.length)
+    .fill('')
+    .map(() => [0, 0])
+  for (let i = 0; i < prices.length; i++) {
+    if (i === 0) {
+      dp[i][0] = 0
+      dp[i][1] = -prices[i]
+      continue
     }
-    return big
+    dp[i][0] = Math.max(dp[i - 1][0], dp[i - 1][1] + prices[i])
+    dp[i][1] = Math.max(dp[i - 1][1], -prices[i])
   }
-  for (let i = 0; i < len; i++) {
-    const lastArr = prices.slice(i)
-    const big = findBig(lastArr)
-    gaps[i] = big - prices[i]
-  }
-  const result = findBig(gaps)
-  return result > 0 ? result : 0
-};
+  return prices.length > 0 ? dp[prices.length - 1][0] : 0
+}
 // @lc code=end
 
+maxProfit([])
