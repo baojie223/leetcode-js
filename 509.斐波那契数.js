@@ -9,12 +9,15 @@
  * @param {number} N
  * @return {number}
  */
-var fib = function(N) {
-  if (N < 2) {
-    return N
-  } else {
-    return fib(N - 1) + fib(N - 2)
+var fib = function (N) {
+  if (N < 2) return N
+  let pre = 0,
+    curr = 1
+  for (let i = 2; i < N; i++) {
+    const temp = curr
+    curr = pre + curr
+    pre = temp
   }
-};
+  return curr + pre
+}
 // @lc code=end
-
