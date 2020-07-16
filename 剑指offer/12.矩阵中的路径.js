@@ -13,15 +13,16 @@ var exist = function (board, word) {
 };
 
 function dfs(board, i, j, word, k) {
-  if (i >= board.length || j >= board[0].length || i < 0 || j < 0 || board[i][j] !== word[k]) return false;
+  if (i < 0 || i >= board.length || j < 0 || j >= board[0].length || word[k] !== board[i][j]) return false;
   if (k === word.length - 1) return true;
-  const tmp = board[i][j];
+
+  const temp = board[i][j];
   board[i][j] = '/';
   const res =
     dfs(board, i - 1, j, word, k + 1) ||
     dfs(board, i + 1, j, word, k + 1) ||
     dfs(board, i, j - 1, word, k + 1) ||
     dfs(board, i, j + 1, word, k + 1);
-  board[i][j] = tmp;
+  board[i][j] = temp;
   return res;
 }

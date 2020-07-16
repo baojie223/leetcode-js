@@ -10,23 +10,26 @@
  * @return {boolean}
  */
 var isBipartite = function (graph) {
+  // 上色法, 时间O(n), 空间O(n)
   const visited = [];
   const queue = [];
   for (let i = 0; i < graph.length; i++) {
     if (visited[i]) continue;
     queue.push(i);
     visited[i] = 1;
-    while (queue.length > 0) {
-      const current = queue.shift();
-      const currentColor = visited[current];
-      const neighborColor = -currentColor;
-      for (let j = 0; j < graph[current].length; j++) {
-        const neighbor = graph[current][j];
+
+    while (queue.length) {
+      const curr = queue.shift();
+      const currColor = visited[curr];
+      const neighborColor = -currColor;
+      for (let j = 0; j < graph[curr].length; j++) {
+        const neighbor = graph[curr][j];
         if (!visited[neighbor]) {
           visited[neighbor] = neighborColor;
           queue.push(neighbor);
+        } else if (visited[neighbor] !== neighborColor) {
+          return false;
         }
-        if (visited[neighbor] !== neighborColor) return false;
       }
     }
   }
