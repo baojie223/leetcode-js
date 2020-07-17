@@ -8,21 +8,39 @@
  * @param {number} target
  * @return {number}
  */
-var searchInsert = function(nums, target) {
-  if (nums.some(num => num === target)) {
-    return nums.findIndex(num => num === target)
-  } else {
-    for (let i = 0; i < nums.length - 1; i ++) {
-      if (nums[i] < target && nums[i + 1] > target) {
-        return i + 1
-      }
-    }
-    if (target < nums[0]) {
-      return 0
-    }
-    if (target > nums[nums.length - 1]) {
-      return nums.length
+// 递归的二分法
+// var searchInsert = function (nums, target) {
+//   return search(nums, 0, nums.length - 1, target);
+// };
+
+// function search(nums, low, high, target) {
+//   if (low > high) {
+//     return low;
+//   }
+//   const mid = Math.floor(low + (high - low) / 2);
+//   if (nums[mid] > target) {
+//     return search(nums, low, mid - 1, target);
+//   } else if (nums[mid] < target) {
+//     return search(nums, mid + 1, high, target);
+//   } else if (nums[mid] === target) {
+//     return mid;
+//   }
+// }
+
+var searchInsert = function (nums, target) {
+  let i = 0,
+    j = nums.length - 1;
+  while (i <= j) {
+    const mid = Math.floor(i + (j - i) / 2);
+    if (nums[mid] > target) {
+      j = mid - 1;
+    } else if (nums[mid] < target) {
+      i = mid + 1;
+    } else if (nums[mid] === target) {
+      return mid;
     }
   }
+  return i;
 };
 
+// searchInsert([1, 3, 5, 6], 5);
