@@ -10,8 +10,8 @@
  * @param {number} target
  * @return {number[]}
  */
-var twoSum = function(numbers, target) {
-  // solution no.1
+var twoSum = function (numbers, target) {
+  // 暴力法
   // for (let i = 0; i < numbers.length; i ++) {
   //   for (let j = i + 1; j < numbers.length; j++) {
   //     if (numbers[i] + numbers[j] === target) {
@@ -21,23 +21,17 @@ var twoSum = function(numbers, target) {
   // }
   // return [0, 0]
 
-  // solution no.2
-  let i = 0
-  let j = numbers.length - 1
+  // 双指针, 时间O(n), 空间O(1)
+  let i = 0,
+    j = numbers.length - 1;
   while (i < j) {
-    if (numbers[i] + numbers[j] === target) {
-      return [i + 1, j + 1]
-    }
     if (numbers[i] + numbers[j] < target) {
-      i++
-      continue
-    }
-    if (numbers[i] + numbers[j] > target) {
-      j--
-      continue
+      i++;
+    } else if (numbers[i] + numbers[j] > target) {
+      j--;
+    } else if (numbers[i] + numbers[j] === target) {
+      return [i + 1, j + 1];
     }
   }
-  return [0, 0]
 };
 // @lc code=end
-
