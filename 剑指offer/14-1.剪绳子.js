@@ -3,21 +3,18 @@
  * @return {number}
  */
 var cuttingRope = function (n) {
-  const visited = Array(n).fill(0);
-  visited[0] = 0;
-  visited[1] = 0;
-  visited[2] = 1;
-  return dp(n, visited);
-};
-
-function dp(n, visited) {
-  if (visited[n]) return visited[n];
-  let max = 0;
-  for (let i = 1; i < n; i++) {
-    max = Math.max(max, dp(i, visited) * dp(n - i, visited));
+  // 贪心
+  let count = Math.floor(n / 3)
+  let remainder = n % 3
+  if (remainder === 0) {
+    if (count === 1) return 1 * 2
+    return Math.pow(3, count)
   }
-  visited[n] = max;
-  return max;
+  if (remainder === 1) {
+    return Math.pow(3, count - 1) * 2 * 2
+  }
+  if (remainder === 2) {
+    if (count === 0) return 1 * 1
+    return Math.pow(3, count) * 2
+  }
 }
-
-cuttingRope(10);
