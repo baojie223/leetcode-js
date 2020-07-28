@@ -10,6 +10,7 @@
  * @param {string} p
  * @return {boolean}
  */
+// 第二次不看题解解决hard
 var isMatch = function (s, p) {
   const m = s.length,
     n = p.length
