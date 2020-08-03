@@ -10,30 +10,29 @@
  * @param {string} num2
  * @return {string}
  */
-var addStrings = function(num1, num2) {
-  while (num1.length > num2.length) {
-    num2 = '0' + num2
+var addStrings = function (num1, num2) {
+  let i = num1.length - 1,
+    j = num2.length - 1
+  let curr = 0,
+    carry = 0,
+    rem = 0
+  let n1, n2
+  let ans = ''
+  while (i >= 0 || j >= 0) {
+    n1 = i >= 0 ? Number(num1[i]) : 0
+    n2 = j >= 0 ? Number(num2[j]) : 0
+    curr = n1 + n2 + carry
+    if (curr >= 10) {
+      rem = curr % 10
+      carry = 1
+    } else {
+      rem = curr
+      carry = 0
+    }
+    ans = String(rem) + ans
+    i--
+    j--
   }
-  while (num1.length < num2.length) {
-    num1 = '0' + num1
-  }
-  const len = num1.length
-  let temp
-  let sum = ''
-  let quotient = 0
-  let remainder = 0
-  let n1
-  let n2
-  for (let i = len - 1; i >= 0; i--) {
-    n1 = typeof num1[i] === 'undefined' ? 0 : Number(num1[i])
-    n2 = typeof num2[i] === 'undefined' ? 0 : Number(num2[i])
-    temp = n1 + n2 + quotient
-    quotient = Math.floor(temp / 10)
-    remainder = temp % 10
-    sum = remainder + sum 
-  }
-  return quotient === 0 ? sum : quotient + sum
+  return carry ? '1' + ans : ans
 }
 // @lc code=end
-
-// console.log(addStrings('9', '99'))
