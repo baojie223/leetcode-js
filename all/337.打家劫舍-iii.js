@@ -16,20 +16,22 @@
  * @param {TreeNode} root
  * @return {number}
  */
+// dp, 0为不偷, 1为偷
 var rob = function (root) {
   const memo = new Map()
-  function db(root) {
-    if (memo.has(root)) return memo.get(root)
-    if (!root) return 0
-    const do_it =
-      root.val +
-      (root.left ? db(root.left.left) + db(root.left.right) : 0) +
-      (root.right ? db(root.right.left) + db(root.right.right) : 0)
-    const not_do_it = db(root.left) + db(root.right)
-    memo.set(root, Math.max(do_it, not_do_it))
-    return memo.get(root)
-  }
-  return db(root)
+  return dp(root, memo)
+}
+
+function dp(root, memo) {
+  if (!root) return 0
+  if (memo.has(root)) return memo.get(root)
+  const a =
+    root.val +
+    (root.left ? dp(root.left.left, memo) + dp(root.left.right, memo) : 0) +
+    (root.right ? dp(root.right.left, memo) + dp(root.right.right, memo) : 0)
+  const b = dp(root.left, memo) + dp(root.right, memo)
+  memo.set(root, Math.max(a, b))
+  return memo.get(root)
 }
 
 // @lc code=end
