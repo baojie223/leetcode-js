@@ -7,23 +7,21 @@
  * @param {string} s
  * @return {boolean}
  */
-var isValid = function(s) {
+var isValid = function (s) {
   // 1. 栈匹配
   const stack = []
   for (let i = 0; i < s.length; i++) {
-    if (s[i] === '(') {
-      stack.push(')')
-    } else if (s[i] === '[') {
-      stack.push(']')
-    } else if (s[i] === '{') {
-      stack.push('}')
-    } else {
-      if (stack.pop() !== s[i]) {
-        return false
-      }
-    }
+    if (['(', '[', '{'].includes(s[i])) {
+      stack.unshift(s[i])
+    } else if (
+      (s[i] === ')' && stack[0] === '(') ||
+      (s[i] === ']' && stack[0] === '[') ||
+      (s[i] === '}' && stack[0] === '{')
+    ) {
+      stack.shift()
+    } else return false
   }
-  return stack.length ? false : true
+  return !stack.length
 
   // 以前的解法
   // let stack = []
