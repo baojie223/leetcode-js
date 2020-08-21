@@ -17,24 +17,24 @@
  * @return {number}
  */
 var minDepth = function (root) {
+  return bfs(root)
+}
+
+function bfs(root, depth = 1) {
   if (!root) return 0
-  const queue = []
+  let queue = []
   queue.push(root)
-  let depth = 1
-  while (queue.length > 0) {
-    const size = queue.length
-    for (let i = 0; i < size; i++) {
-      const current = queue.shift()
-      if (!current.left && !current.right) return depth
-      if (current.left) {
-        queue.push(current.left)
-      }
-      if (current.right) {
-        queue.push(current.right)
-      }
+  let tmp = []
+  while (queue.length) {
+    const a = queue.shift()
+    if (!a.left && !a.right) return depth
+    if (a.left) tmp.push(a.left)
+    if (a.right) tmp.push(a.right)
+    if (!queue.length) {
+      queue = tmp
+      tmp = []
+      depth++
     }
-    depth++
   }
-  return depth
 }
 // @lc code=end
