@@ -9,28 +9,34 @@
  * @param {number[]} nums
  * @return {boolean}
  */
+const EPSILON = 1e-6
 var judgePoint24 = function (nums) {
   return backtrack(nums)
 }
 
-function backtrack(nums, current) {
-  if (!isInt(current)) return false
-  if (nums.length === 0) {
-    return current === 24
+function backtrack(nums, path = '') {
+  if (nums.length === 1) {
+    return Math.abs(nums[0] - 24) < EPSILON
   }
-  nums.push(current)
   const n = nums.length
-  for (let i = 0; i < n - 1; i++) {
-    for (let j = i + 1; j < n; j++) {
-      const [b] = nums.splice(j, 1)
-      const [a] = nums.splice(i, 1)
-      const bool = backtrack(nums, a + b) || backtrack(nums, a * b) || backtrack(nums, a / b) || backtrack(nums, b / a)
+  for (let i = 0; i < n; i++) {
+    for (let j = 0; j < n; j++) {
+      if (i === j) continue
+      const t = [...nums]
+      const a = nums[i]
+      const b = nums[j]
+      nums[i] = -1
+      nums[j] = -1
+      nums = nums.filter((num) => num !== -1)
+      const bool =
+        backtrack([...nums, a - b], `${path} ${a} - ${b}`) ||
+        backtrack([...nums, a + b], `${path} ${a} + ${b}`) ||
+        backtrack([...nums, a * b], `${path} ${a} * ${b}`) ||
+        backtrack([...nums, a / b], `${path} ${a} / ${b}`)
       if (bool) return true
-      nums.splice(i, 0, a)
-      nums.splice(j, 0, b)
+      nums = t
     }
   }
-  nums.pop()
   return false
 }
 
@@ -39,4 +45,4 @@ function isInt(n) {
 }
 // @lc code=end
 
-judgePoint24([4, 1, 8, 7])
+judgePoint24([8, 4, 7, 1])
