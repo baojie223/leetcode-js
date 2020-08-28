@@ -30,18 +30,24 @@ var removeDuplicates = function(nums) {
   // return nums.length
 
   // solution no.2 快慢指针
+  // let i = 0
+  // let j = 1
+  // while (j < nums.length) {
+  //   if (nums[i] !== nums[j]) {
+  //     nums[i + 1] = nums[j]
+  //     i++
+  //     j++
+  //   } else {
+  //     j++
+  //   }
+  //   j++
+  // }
+  // return i + 1
+
   let i = 0
-  let j = 1
-  while (j < nums.length) {
-    if (nums[i] !== nums[j]) {
-      nums[i + 1] = nums[j]
-      i++
-      j++
-    } else {
-      j++
-    }
-    j++
+  for (const n of nums) {
+    if (i < 1 || n > nums[i - 1]) nums[i++] = n
   }
-  return i + 1
+  return i
 };
 
