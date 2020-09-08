@@ -12,19 +12,19 @@
  */
 var combine = function (n, k) {
   const ans = []
-  if (k === 0) return ans
-  backtrack(1, n, k, [], ans)
+  if (k === 0) return []
+  dfs(1, n, [], ans, k)
   return ans
 }
 
-function backtrack(s, n, k, path, ans) {
-  if (path.length === k) {
+function dfs(start, end, path, ans, k) {
+  if (k === 0) {
     ans.push([...path])
     return
   }
-  for (let i = s; i <= n; i++) {
+  for (let i = start; i <= end; i++) {
     path.push(i)
-    backtrack(i + 1, n, k, path, ans)
+    dfs(i + 1, end, path, ans, k - 1)
     path.pop()
   }
 }
