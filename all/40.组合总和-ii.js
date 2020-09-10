@@ -10,7 +10,7 @@
  * @param {number} target
  * @return {number[][]}
  */
-// 滑动窗口
+// 回溯剪枝
 var combinationSum2 = function (candidates, target) {
   candidates.sort((a, b) => a - b)
   const path = [],
