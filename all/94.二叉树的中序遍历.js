@@ -42,37 +42,33 @@
  * @param {TreeNode} root
  * @return {number[]}
  */
-var inorderTraversal = function(root) {
-  // 1. 递归
-  // let res = []
-  // helper(root, res)
-  // return res
+var inorderTraversal = function (root) {
+  // 递归
+  // const ans = []
+  // inorder(root)
+  // return ans
 
-  // 2.迭代
-  let res = []
-  const stack = []
-  let rt = root
-  while (rt || stack.length) {
-    while (rt) {
-      stack.push(rt)
-      rt = rt.left
+  // function inorder(root) {
+  //   if (!root) return
+  //   inorder(root.left)
+  //   ans.push(root.val)
+  //   inorder(root.right)
+  // }
+
+  // 迭代
+  const ans = [],
+    stack = []
+
+  while (root || stack.length) {
+    while (root) {
+      stack.push(root)
+      root = root.left
     }
-    rt = stack.pop()
-    res.push(rt.val)
-    rt = rt.right
+    const node = stack.pop()
+    ans.push(node.val)
+    root = node.right
   }
-  return res
-}
 
-// const helper = (root, res) => {
-//   if (root) {
-//     if (root.left) {
-//       helper(root.left, res)
-//     }
-//     res.push(root.val)
-//     if (root.right) {
-//       helper(root.right, res)
-//     }
-//   }
-// }
+  return ans
+}
 // @lc code=end
