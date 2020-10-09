@@ -20,23 +20,22 @@
 var hasCycle = function(head) {
   // 1. 用数组保存遍历过的值
   // 2. 快慢指针
-  let fast = head
-  let slow = head
+  
+  let fast = head, slow = head
   while (fast && slow) {
     if (fast.next && fast.next.next) {
       fast = fast.next.next
     } else {
       return false
     }
+
     if (slow.next) {
       slow = slow.next
     } else {
       return false
     }
 
-    if (fast === slow) {
-      return true
-    }
+    if (fast === slow) return true
   }
   return false
 }
