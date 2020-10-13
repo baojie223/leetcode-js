@@ -35,8 +35,7 @@ var swapPairs = function (head) {
 
   // 递归
   if (!head || !head.next) return head
-  let p1 = head,
-    p2 = head.next
+  const p1 = head, p2 = head.next
   p1.next = swapPairs(p2.next)
   p2.next = p1
   return p2
