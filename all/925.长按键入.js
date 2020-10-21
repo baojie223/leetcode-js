@@ -30,7 +30,7 @@ var isLongPressedName = function (name, typed) {
   }
   if (i < n) return false
   while (j < m) {
-    if (typed[j] !== typed[j - 1]) return false
+    if (typed[j] !== typed[j - 1]) return false 
     j++
   }
   return true

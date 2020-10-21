@@ -42,7 +42,7 @@ var reorderList = function (head) {
     head.next = tail
     outTail = tail.next
     tail.next = tmp
-    return outTail
+    return outTail 
   }
 
   helper(head, len)
