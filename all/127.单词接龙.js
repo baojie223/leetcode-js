@@ -11,139 +11,105 @@
  * @param {string[]} wordList
  * @return {number}
  */
+// 双向BFS, 效率极高
 var ladderLength = function (beginWord, endWord, wordList) {
-  if (!wordList.includes(endWord)) return 0
+  const wordSet = new Set(wordList)
+  if (!wordSet.has(endWord)) return 0
+  wordSet.delete(beginWord)
 
-  const n = beginWord.length,
-    a = 'a'.charCodeAt(0)
-  let count = Infinity
-
-  const index = wordList.indexOf(beginWord)
-  if (index !== -1) wordList.splice(index, 1)
-
-  const dfs = (word, list, path = []) => {
-    if (word === endWord) {
-      count = Math.min(count, path.length + 1)
-      return
+  let beginSet = new Set([beginWord]),
+    endSet = new Set([endWord]),
+    visited = new Set()
+  let step = 1
+  while (beginSet.size && endSet.size) {
+    if (endSet.size < beginSet.size) {
+      const temp = beginSet
+      beginSet = endSet
+      endSet = temp
     }
-    let t = '',
-      index = -1
-    for (let i = 0; i < n; i++) {
-      for (let j = 0; j < 26; j++) {
-        if (String.fromCharCode(a + j) === word[i]) continue
-        t = word.slice(0, i) + String.fromCharCode(a + j) + word.slice(i + 1)
-        index = list.indexOf(t)
-        if (index !== -1) {
-          const removed = list.splice(index, 1)
-          path.push(removed[0])
-          dfs(t, list, path)
-          path.pop()
-          list.splice(index, 0, removed[0])
+
+    const newSet = new Set()
+    for (let word of beginSet) {
+      if (judge(word, wordSet, endSet, newSet, visited)) return step + 1
+    }
+    beginSet = newSet
+    step++
+  }
+  return 0
+}
+
+function judge(word, wordSet, endSet, newSet, visited) {
+  visited.add(word)
+  const a = 'a'.charCodeAt(0)
+  for (let i = 0; i < word.length; i++) {
+    for (let j = 0; j < 26; j++) {
+      const newChar = getChar(a + j)
+      if (newChar === word[i]) continue
+      const newWord = replace(word, i, newChar)
+      if (wordSet.has(newWord)) {
+        if (endSet.has(newWord)) return true
+        if (!visited.has(newWord)) {
+          newSet.add(newWord)
         }
       }
     }
   }
-
-  dfs(beginWord, wordList)
-
-  return count === Infinity ? 0 : count
+  return false
 }
+
+function replace(string, index, char) {
+  return string.substring(0, index) + char + string.substring(index + 1)
+}
+
+function getChar(code) {
+  return String.fromCharCode(code)
+}
+
+// BFS
+// var ladderLength = function (beginWord, endWord, wordList) {
+//   const wordSet = new Set(wordList)
+//   if (!wordSet.has(endWord)) return 0
+//   wordSet.delete(beginWord)
+
+//   const queue = [beginWord],
+//     visited = []
+//   let step = 1
+//   while (queue.length) {
+//     const len = queue.length
+//     for (let i = 0; i < len; i++) {
+//       const word = queue.shift()
+//       if (visited.includes(word)) continue
+//       if (judge(word, wordSet, endWord, queue, visited)) return step + 1
+//     }
+//     step++
+//   }
+//   return 0
+// }
+
+// function judge(word, wordSet, endWord, queue, visited) {
+//   visited.push(word)
+//   const a = 'a'.charCodeAt(0)
+//   for (let i = 0; i < word.length; i++) {
+//     for (let j = 0; j < 26; j++) {
+//       const newChar = getChar(a + j)
+//       if (newChar === word[i]) continue
+//       const newWord = replace(word, i, newChar)
+//       if (newWord === endWord) return true
+//       if (wordSet.has(newWord) && !visited.includes(newWord)) {
+//         queue.push(newWord)
+//       }
+//     }
+//   }
+//   return false
+// }
+
+// function replace(string, index, char) {
+//   return string.substring(0, index) + char + string.substring(index + 1)
+// }
+
+// function getChar(code) {
+//   return String.fromCharCode(code)
+// }
 // @lc code=end
 
-ladderLength('qa', 'sq', [
-  'si',
-  'go',
-  'se',
-  'cm',
-  'so',
-  'ph',
-  'mt',
-  'db',
-  'mb',
-  'sb',
-  'kr',
-  'ln',
-  'tm',
-  'le',
-  'av',
-  'sm',
-  'ar',
-  'ci',
-  'ca',
-  'br',
-  'ti',
-  'ba',
-  'to',
-  'ra',
-  'fa',
-  'yo',
-  'ow',
-  'sn',
-  'ya',
-  'cr',
-  'po',
-  'fe',
-  'ho',
-  'ma',
-  're',
-  'or',
-  'rn',
-  'au',
-  'ur',
-  'rh',
-  'sr',
-  'tc',
-  'lt',
-  'lo',
-  'as',
-  'fr',
-  'nb',
-  'yb',
-  'if',
-  'pb',
-  'ge',
-  'th',
-  'pm',
-  'rb',
-  'sh',
-  'co',
-  'ga',
-  'li',
-  'ha',
-  'hz',
-  'no',
-  'bi',
-  'di',
-  'hi',
-  'qa',
-  'pi',
-  'os',
-  'uh',
-  'wm',
-  'an',
-  'me',
-  'mo',
-  'na',
-  'la',
-  'st',
-  'er',
-  'sc',
-  'ne',
-  'mn',
-  'mi',
-  'am',
-  'ex',
-  'pt',
-  'io',
-  'be',
-  'fm',
-  'ta',
-  'tb',
-  'ni',
-  'mr',
-  'pa',
-  'he',
-  'lr',
-  'sq',
-  'ye',
-])
+ladderLength('hit', 'cog', ['hot', 'dot', 'dog', 'lot', 'log', 'cog'])
