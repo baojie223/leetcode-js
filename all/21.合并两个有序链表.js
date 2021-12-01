@@ -50,7 +50,7 @@
 // }
 
 // 2. 递归
-var mergeTwoLists = function(l1, l2) {
+var mergeTwoLists = function (l1, l2) {
   if (!l1) {
     return l2
   }
@@ -58,10 +58,17 @@ var mergeTwoLists = function(l1, l2) {
     return l1
   }
   if (l1.val < l2.val) {
-    l1.next = mergeTwoLists(l1.next, l2)
+    const next = mergeTwoLists(l1.next, l2)
+    l1.next = next
     return l1
-  } else {
-    l2.next = mergeTwoLists(l1, l2.next)
+  } else if (l1.val === l2.val) {
+    const next = mergeTwoLists(l1.next, l2.next)
+    l1.next = l2
+    l2.next = next
+    return l1
+  } else if (l1.val > l2.val) {
+    const next = mergeTwoLists(l1, l2.next)
+    l2.next = next
     return l2
   }
 }
