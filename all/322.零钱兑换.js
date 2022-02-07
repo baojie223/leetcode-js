@@ -10,7 +10,21 @@
  * @param {number} amount
  * @return {number}
  */
+// dp[amount] = min(dp[amount - coin1], dp[amount - coin2], ..., dp[amount - coinN]) + 1
+// dp[coin1] = 1, ..., dp[coinN] = 1
+// dp[amount < min(coin1, ..., coinN)] -1
 var coinChange = function (coins, amount) {
+  const dp = new Array(amount + 1).fill(amount + 1)
+  dp[0] = 0
+  for (let i = 0; i <= amount + 1; i++) {
+    for (let coin of coins) {
+      if (i < coin) {
+        continue
+      }
+      dp[i] = Math.min(dp[i - coin] + 1, dp[i])
+    }
+  }
+  return dp[amount] === amount + 1 ? -1 : dp[amount]
   // dp[amount] = min(dp[amount - coin1], dp[amount - coin2], dp[amount - coin3]...)
   // const memo = new Map()
   // function dp(n) {
@@ -28,15 +42,15 @@ var coinChange = function (coins, amount) {
   // }
   // return dp(amount)
 
-  const dp = Array(amount + 1).fill(amount + 1)
-  dp[0] = 0
-  for (let i = 0; i < dp.length; i++) {
-    for (let coin of coins) {
-      if (i < coin) continue
-      dp[i] = Math.min(dp[i], dp[i - coin] + 1)
-    }
-  }
-  return dp[amount] === amount + 1 ? -1 : dp[amount]
+  // const dp = Array(amount + 1).fill(amount + 1)
+  // dp[0] = 0
+  // for (let i = 0; i < dp.length; i++) {
+  //   for (let coin of coins) {
+  //     if (i < coin) continue
+  //     dp[i] = Math.min(dp[i], dp[i - coin] + 1)
+  //   }
+  // }
+  // return dp[amount] === amount + 1 ? -1 : dp[amount]
 }
 // @lc code=end
 

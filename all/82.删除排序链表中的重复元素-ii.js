@@ -16,24 +16,42 @@
  * @param {ListNode} head
  * @return {ListNode}
  */
-var deleteDuplicates = function (head) {
-  const dummy = new ListNode(NaN)
+// var deleteDuplicates = function (head) {
+//   const dummy = new ListNode(NaN)
+//   dummy.next = head
+//   let p1 = dummy, p2 = head
+//   while (p2) {
+//     while (p2.next && p2.val !== p2.next.val) {
+//       p1 = p2
+//       p2 = p2.next
+//     }
+//     while (p2.next && p2.val === p2.next.val) {
+//       p2 = p2.next
+//     }
+//     if (!p2.next) {
+//       if (p1.next !== p2) p1.next = null
+//       break
+//     }
+//     p2 = p2.next
+//     p1.next = p2
+//   }
+//   return dummy.next
+// }
+
+// 20211220
+function deleteDuplicates(head) {
+  const dummy = new ListNode()
   dummy.next = head
-  let p1 = dummy, p2 = head
-  while (p2) {
-    while (p2.next && p2.val !== p2.next.val) {
-      p1 = p2
-      p2 = p2.next
+  let p = dummy
+  while (p.next && p.next.next) {
+    if (p.next.val === p.next.next.val) {
+      const v = p.next.val
+      while (p.next && p.next.val === v) {
+        p.next = p.next.next
+      }
+    } else {
+      p = p.next
     }
-    while (p2.next && p2.val === p2.next.val) {
-      p2 = p2.next
-    }
-    if (!p2.next) {
-      if (p1.next !== p2) p1.next = null
-      break
-    }
-    p2 = p2.next
-    p1.next = p2
   }
   return dummy.next
 }

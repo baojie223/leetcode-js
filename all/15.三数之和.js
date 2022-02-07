@@ -39,59 +39,94 @@
  * @return {number[][]}
  */
 
-var threeSum = function(nums) {
-  // 1. 三层循环暴力破解
-  // const res = []
-  // for (let i = 0; i < nums.length - 2; ++i) {
-  //   const target = -nums[i]
-  //   for (let j = i + 1; j < nums.length - 1; ++j) {
-  //     for (let k = j + 1; k < nums.length; ++k) {
-  //       if (nums[j] + nums[k] === target) {
-  //         res.push([nums[i], nums[j], nums[k]])
-  //       }
-  //     }
-  //   }
-  // }
-  // return res
+// var threeSum = function(nums) {
+//   // 1. 三层循环暴力破解
+//   // const res = []
+//   // for (let i = 0; i < nums.length - 2; ++i) {
+//   //   const target = -nums[i]
+//   //   for (let j = i + 1; j < nums.length - 1; ++j) {
+//   //     for (let k = j + 1; k < nums.length; ++k) {
+//   //       if (nums[j] + nums[k] === target) {
+//   //         res.push([nums[i], nums[j], nums[k]])
+//   //       }
+//   //     }
+//   //   }
+//   // }
+//   // return res
 
-  // 2. 排序加双指针
-  if (nums.length < 3) return []
+//   // 2. 排序加双指针
+//   if (nums.length < 3) return []
+//   const res = []
+//   const sortedNums = nums.sort((a, b) => a - b)
+//   for (let i = 0; i < nums.length; i++) {
+//     if (sortedNums[i] > 0) {
+//       break
+//     }
+//     if (i > 0 && sortedNums[i] === sortedNums[i - 1]) {
+//       continue
+//     }
+
+//     let j = i + 1
+//     let k = nums.length - 1
+//     while (j < k) {
+//       if (sortedNums[i] + sortedNums[j] + sortedNums[k] === 0) {
+//         res.push([sortedNums[i], sortedNums[j], sortedNums[k]])
+//         while (sortedNums[j] === sortedNums[j + 1]) {
+//           j++
+//         }
+//         while (sortedNums[k] === sortedNums[k - 1]) {
+//           k--
+//         }
+//         j++
+//         k--
+//       } else if (sortedNums[i] + sortedNums[j] + sortedNums[k] > 0) {
+//         k--
+//       } else {
+//         j++
+//       }
+//     }
+//   }
+//   return res
+// }
+
+// 20211222
+function threeSum(nums) {
+  const n = nums.length
+  nums.sort((a, b) => a - b)
+  if (nums[0] > 0 || nums[n - 1] < 0) {
+    return []
+  }
   const res = []
-  const sortedNums = nums.sort((a, b) => a - b)
-  for (let i = 0; i < nums.length; i++) {
-    if (sortedNums[i] > 0) {
+  for (let i = 0; i < n; i++) {
+    if (nums[i] > 0) {
       break
     }
-    if (i > 0 && sortedNums[i] === sortedNums[i - 1]) {
+    if (i > 0 && nums[i] === nums[i - 1]) {
       continue
     }
-
-    let j = i + 1
-    let k = nums.length - 1
-    while (j < k) {
-      if (sortedNums[i] + sortedNums[j] + sortedNums[k] === 0) {
-        res.push([sortedNums[i], sortedNums[j], sortedNums[k]])
-        while (sortedNums[j] === sortedNums[j + 1]) {
-          j++
-        }
-        while (sortedNums[k] === sortedNums[k - 1]) {
-          k--
-        }
-        j++
-        k--
-      } else if (sortedNums[i] + sortedNums[j] + sortedNums[k] > 0) {
-        k--
+    let l = i + 1,
+      r = n - 1
+    while (l < r) {
+      if (nums[i] + nums[l] + nums[r] < 0) {
+        l++
+      } else if (nums[i] + nums[l] + nums[r] > 0) {
+        r--
       } else {
-        j++
+        res.push([nums[i], nums[l], nums[r]])
+        while (l < r && nums[l] === nums[l + 1]) {
+          l++
+        }
+        while (l < r && nums[r] === nums[r - 1]) {
+          r--
+        }
+        l++
+        r--
       }
     }
   }
   return res
 }
 
-// const quickSort = nums => {
-
-// }
 // @lc code=end
 
 // console.log(threeSum([-1, 0, 1, 2, -1, -4]))
